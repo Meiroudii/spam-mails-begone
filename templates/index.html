@@ -3,17 +3,57 @@
 <head>
   <meta charset="utf-8">
   <title>Spam Begone</title>
+  <style>
+    :root {
+      --main-bg: hsl(243, 40%, 20%);
+    }
+    body {
+      background: var(--main-bg);
+      color: whitesmoke;
+      font-size: 1.5rem;
+      overflow-x: hidden;
+    }
+    main {
+      margin: 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      width: 100%;
+    }
+    footer {
+      background: black;
+      height: 30vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    textarea {
+      background: hsl(200, 30%, 30%);
+      color: lime;
+    }
+  </style>
 </head>
 <body>
-  <h1>Spam Filter Simulator</h1>
-  <form method="post" action="/predict" id="f">
-    <textarea name="text" rows="10" cols="80" placeholder="Paste email or SMS text here..."></textarea><br>
-    <button type="submit">Check</button>
-  </form>
-
-  <div id="result"></div>
-
+  <main>
+      <header>
+        <h1>Spam Filter Simulator</h1>
+      </header>
+      <section>
+        <form method="post" action="/predict" id="f">
+          <textarea name="text" rows="10" cols="80" placeholder="Paste email or SMS text here..."></textarea><br>
+          <button type="submit">Check</button>
+        </form>
+        <div id="result"></div>
+      </section>
+  </main>
+  <footer>
+      Meiroudii <span id="year"></span>
+  </footer>
   <script>
+  const year_now = document.getElementById("year");
+  year_now.textContent = new Date().getFullYear();
   const form = document.getElementById('f');
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
