@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Spam Begone</title>
+</head>
+<body>
+  <h1>Spam Filter Simulator</h1>
+  <form method="post" action="/predict" id="f">
+    <textarea name="text" rows="10" cols="80" placeholder="Paste email or SMS text here..."></textarea><br>
+    <button type="submit">Check</button>
+  </form>
+
+  <div id="result"></div>
+
+  <script>
+  const form = document.getElementById('f');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const text = form.elements['text'].value;
+    const res = await fetch('/predict', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({text})
+    });
+    const j = await res.json();
+    const out = document.getElementById('result');
+    if (j.error) {
+      out.innerText = 'Error: ' + j.error;
+    } else {
+      out.innerText = `Label: ${j.label}  |  spam probability: ${Math.round(j.spam_probability*100)}%`;
+    }
+  });
+  </script>
+</body>
+</html>
